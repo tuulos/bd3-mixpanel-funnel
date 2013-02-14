@@ -16,9 +16,16 @@ def segment(model, params):
 def label(segment, params):
     return '%d people' % len(segment)
 
+def unique(events):
+    seen = set()
+    for event in events:
+        if event not in seen:
+            yield event
+            seen.add(event)
+
 @insight
 def view(model, params):
-    chosen = params['events']['value'] if 'events' in params else []
+    chosen = list(unique(params['events']['value'] if 'events' in params else []))
     def steps(events):
         for i in range(len(events)):
             q = Q([Clause([Literal(event)]) for event in events[:i + 1]])
