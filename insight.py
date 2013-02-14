@@ -1,4 +1,4 @@
-from bitdeli.insight import insight
+from bitdeli.insight import insight, segment, segment_label
 from bitdeli.widgets import Text, Bar, Table, Widget
 from discodb.query import Q, Literal, Clause
 
@@ -7,6 +7,14 @@ class TokenInput(Widget):
 
 class Funnel(Widget):
     pass
+
+@segment
+def segment(model, params):
+    return ['1', '1000082353', '1000374994']
+
+@segment_label
+def label(segment, params):
+    return '%d people' % len(segment)
 
 @insight
 def view(model, params):
