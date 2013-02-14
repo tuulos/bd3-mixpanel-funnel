@@ -5,6 +5,9 @@ from discodb.query import Q, Literal, Clause
 class TokenInput(Widget):
     pass
 
+class Funnel(Widget):
+    pass
+
 @insight
 def view(model, params):
     chosen = params['events']['value'] if 'events' in params else []
@@ -18,7 +21,7 @@ def view(model, params):
                           value=chosen,
                           data=list(model))]
     if chosen:
-        widgets += [Bar(id='funnel',
-                        size=(12, 6),
-                        data=list(steps(chosen)))]
+        widgets += [Funnel(id='funnel',
+                           size=(12, 6),
+                           data=list(steps(chosen)))]
     return widgets
