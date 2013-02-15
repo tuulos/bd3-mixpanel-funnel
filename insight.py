@@ -38,7 +38,7 @@ def view(model, params):
 
 def segment_sequence(params):
     events = params['params']['events']['value']
-    return events[:events.index(params['value']) + 1]
+    return events[:events.index(params['value'][0]) + 1]
 
 @segment
 def segment(model, params):
