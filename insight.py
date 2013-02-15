@@ -38,13 +38,15 @@ def view(model, params):
 
 def segment_sequence(params):
     events = params['params']['events']['value']
-    return events[:events.index(params['value'][0]) + 1]
+    return events[:events.index(params['value']) + 1]
 
 @segment
 def segment(model, params):
     print 'pa', params
     print 'sa', segment_sequence(params)
-    return query(model, segment_sequence(params))
+    q = query(model, segment_sequence(params))
+    print 'q', list(q)
+    return q
     
 @segment_label
 def label(segment, params):
