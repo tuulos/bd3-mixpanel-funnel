@@ -8,14 +8,6 @@ class TokenInput(Widget):
 class Funnel(Widget):
     pass
 
-@segment
-def segment(model, params):
-    return ['1', '1000082353', '1000374994']
-
-@segment_label
-def label(segment, params):
-    return '%d people' % len(segment)
-
 def unique(events):
     seen = set()
     for event in events:
@@ -23,13 +15,16 @@ def unique(events):
             yield event
             seen.add(event)
 
+def query(model, seq):
+    return model.query(Q([Clause([Literal(event)]) for event in seq]))
+            
 @insight
 def view(model, params):
     chosen = list(unique(params['events']['value'] if 'events' in params else []))
     def steps(events):
         for i in range(len(events)):
-            q = Q([Clause([Literal(event)]) for event in events[:i + 1]])
-            yield events[i], len(model.query(q))
+            yield events[i], len(query(model, events[:i + 1]))
+            
     widgets = [TokenInput(id='events',
                           size=(12, 1),
                           label='Event Sequence',
@@ -40,3 +35,16 @@ def view(model, params):
                            size=(12, 6),
                            data=list(steps(chosen)))]
     return widgets
+
+def segment_sequence(params):
+    events = params['params']['events']['value']
+    return events[:events.index(params['value']) + 1]
+
+@segment
+def segment(model, params):
+    return query(model, segment_sequence(params))
+    
+@segment_label
+def label(segment, params):
+    return 'Funnel: Users who have gone through %s' %\
+            ','.join(segment_sequence(params))
