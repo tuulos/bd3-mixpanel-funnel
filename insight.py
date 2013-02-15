@@ -42,6 +42,8 @@ def segment_sequence(params):
 
 @segment
 def segment(model, params):
+    print 'pa', params
+    print 'sa', segment_sequence(params)
     return query(model, segment_sequence(params))
     
 @segment_label
