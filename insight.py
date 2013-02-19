@@ -50,5 +50,5 @@ def segment(model, params):
     
 @segment_label
 def label(segment, params):
-    return 'Funnel: Users who have gone through %s' %\
-            ','.join(segment_sequence(params))
+    return 'Users who have gone through %s' %\
+            ', '.join(segment_sequence(params))
