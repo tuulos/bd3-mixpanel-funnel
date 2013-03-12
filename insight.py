@@ -46,6 +46,6 @@ def segment(model, params):
     return q
     
 @segment_label
-def label(segment, params):
+def label(segment, model, params):
     return 'Users who have gone through %s' %\
             ', '.join(segment_sequence(params))
