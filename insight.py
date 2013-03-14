@@ -27,7 +27,7 @@ def view(model, params):
 
     yield Text(size=(12, 'auto'),
                label='Analyzing user flows',
-               data={'text': "## Of the people who did X, who many of continued and did Y?\n"})
+               data={'text': "## Of the people who did X, how many of continued and did Y?\n"})
             
     yield TokenInput(id='events',
                      size=(12, 1),
