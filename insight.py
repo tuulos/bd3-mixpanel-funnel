@@ -24,17 +24,16 @@ def view(model, params):
     def steps(events):
         for i in range(len(events)):
             yield events[i], len(query(model, events[:i + 1]))
-            
-    widgets = [TokenInput(id='events',
-                          size=(12, 1),
-                          label='Event Sequence',
-                          value=chosen,
-                          data=list(model))]
+
+    yield TokenInput(id='events',
+                     size=(12, 1),
+                     label='Event Sequence',
+                     value=chosen,
+                     data=list(model))
     if chosen:
-        widgets += [Funnel(id='funnel',
-                           size=(12, 6),
-                           data=list(steps(chosen)))]
-    return widgets
+        yield Funnel(id='funnel',
+                     size=(12, 6),
+                     data=list(steps(chosen)))
 
 def segment_sequence(params):
     events = params['params']['events']['value']
