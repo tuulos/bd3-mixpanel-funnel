@@ -25,6 +25,10 @@ def view(model, params):
         for i in range(len(events)):
             yield events[i], len(query(model, events[:i + 1]))
 
+    yield Text(size=(12, 'auto'),
+               label='Analyzing user flows',
+               data={'text': "### Of the people who did X, who many of continued and did Y?\n"})
+            
     yield TokenInput(id='events',
                      size=(12, 1),
                      label='Event Sequence',
